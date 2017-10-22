@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #ori_pic{
+            width: 400px;
+            height: 400px;
+            border: 1px solid dodgerblue;
+            background:url("400.jpg") no-repeat;
+            position: relative;
+            cursor: crosshair;
+            overflow: hidden;
+        }
+        #mag_div{
+            width: 440px;
+            height: 400px;
+            overflow: hidden;
+            border: 1px solid dodgerblue;
+            position: absolute;
+            left: 520px;
+            top: 100px;
+        }
+        #ori_pic_mask{
+            width: 220px;
+            height: 200px;
+            border: 1px solid red;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background: white;
+            opacity: 0.75;
+        }
+        #mag_pic{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        #cover{
+            width: 400px;
+            height: 400px;
+            border: 1px solid mediumorchid;
+            position: relative;
+            opacity: 0.4;
+            /*background-color: red;*/
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload=function(){
+            var mask=document.getElementById('ori_pic_mask');
+            var ori_pic=document.getElementById('ori_pic');
+            var mag_pic=document.getElementById('mag_pic');
+            ori_pic.onmousemove=function(e){
+//                alert();
+                var env=window.event || e;
+                var mouse_left=env.offsetX || env.layerX;
+                var mouse_top=env.offsetY || env.layerY;
+                document.title =mouse_top+'---'+mouse_left;
+                mask.style.top=mouse_top-100+'px';
+                mask.style.left=mouse_left-110+'px';
+            }
+
+        }
+    </script>
+</head>
+<body>
+<h2>这个是原图</h2>
+<div id="ori_pic">
+    <div id="ori_pic_mask"></div>
+    <div id="cover"></div>
+</div>
+<div id="mag_div"><img src="800.jpg" id="mag_pic"></div>
+</body>
+</html>

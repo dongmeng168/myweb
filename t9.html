@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>浮动广告效果</title>
+	<meta charset="utf-8">
+    <style type="text/css">
+        #ad{
+            width: 300px;
+            height: 200px;
+            border: 1px solid dodgerblue;
+            background:url("ad.jpg") no-repeat;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+    </style>
+	<script type="text/javascript">
+		var delta_x=1;
+		var delta_y=1;
+        var timer;
+		window.onload=function(){
+			var ad=document.getElementById('ad');
+			var ad_top=ad.offsetTop;
+			var ad_left=ad.offsetLeft;
+            var ad_width=ad.offsetWidth;
+            var ad_height=ad.offsetHeight;
+			var w_width=document.documentElement.clientWidth;
+			var w_height=document.documentElement.clientHeight;
+            var ad_close=document.getElementById('close');
+            var max_top=w_height-ad_height;
+            var max_left=w_width-ad_width;
+            function ad_run(){
+                ad_top+=delta_y;
+                ad_left+=delta_x;
+//                如果大于边界或者小于0，改变增量的符号
+                if ( ad_left>=max_left || ad_left<=0) {delta_x*=-1;}
+                if ( ad_top>=max_top || ad_top<=0) {delta_y*=-1;}
+//                如果位置加上宽度大于边界，就是出边界了，就等于边界值
+                if(ad_left>max_left){ad_left=max_left;}
+                if(ad_top>max_top){ad_top=max_top;}
+                if(ad_top<0 ){ad_top=0;}
+                if(ad_left<0){ad_left=0;}
+//                设置位置，不能用ad.offsetWidth方法，只能用下面的方法
+                ad.style.top=ad_top + 'px';
+                ad.style.left=ad_left+'px';
+            }
+//            在加载后立即运行
+            timer=setInterval(ad_run,10);
+//            鼠标移入，清理计时器，停止运行
+            ad.onmouseover=function(){
+                clearInterval(timer);
+            };
+//            鼠标移出，清理定时器（防止叠加效应），再设置新的定时器
+            ad.onmouseout=function(){
+                clearInterval(timer);
+                timer=setInterval(ad_run,10);
+            };
+//            这个是浮动广告上的关闭图形
+            ad_close.onclick=function(){
+                ad.style.display='none';
+            };
+//            窗口尺寸改变，从（0,0）开始，加的值为正值，重新获取窗口尺寸及计算极值
+            window.onresize = function(){
+                ad_top=0;
+                ad_left=0;
+                delta_x=Math.abs(delta_x);
+                delta_y=Math.abs(delta_y);
+                w_width=document.documentElement.clientWidth;
+                w_height=document.documentElement.clientHeight;
+                max_top=w_height-ad_height;
+                max_left=w_width-ad_width;
+                ad.style.top=ad_top + 'px';
+                ad.style.left=ad_left+'px';
+            }
+		}
+	</script>
+</head>
+<body>
+<div id="ad">
+    <img src="close.jpg" id="close">
+</div>
+
+</body>
+</html>

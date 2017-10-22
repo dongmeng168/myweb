@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title></title>
+<style type="text/css">
+#left{
+    height: 400px;
+    width: 400px;
+    position: relative;
+    border: 2px solid deepskyblue;
+    background-image: url("400.jpg");
+    overflow: hidden;
+}
+    #left_box{
+        height: 200px;
+        width: 220px;
+        opacity: 0.8;
+        background-color: beige;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        display: none;
+
+    }
+    #left_master{
+        height: 400px;
+        width: 400px;
+        background-color: ivory;
+        opacity: 0;
+    }
+    #right{
+        height: 400px;
+        width: 440px;
+        position: absolute;
+        left: 430px;
+        top: 20px;
+        overflow: hidden;
+        border: 2px red;
+        display: none;
+    }
+    #right_pic{
+        position: absolute;
+    }
+
+</style>
+<script type="text/javascript">
+    window.onload=function(){
+        var left=document.getElementById('left');
+        var right=document.getElementById('right');
+        var left_box=document.getElementById('left_box');
+        var right_pic=document.getElementById('right_pic');
+//        alert(right_pic);
+        left.onmousemove=function(e){
+            var ev=window.event || e;
+            mouse_left=ev.offsetX || ev.layerX;
+            mouse_top=ev.offsetY || ev.layerY;
+            right.style.display='block';
+            left_box.style.display='block';
+//            document.title=mouse_left+'--'+mouse_top;
+            left_box.style.top = mouse_top- Math.ceil(left_box.offsetHeight/2) +'px';
+            left_box.style.left=mouse_left- Math.ceil(left_box.offsetWidth/2) +'px';
+            right_pic.style.top = 200-mouse_top*2+'px';
+            right_pic.style.left = 220-mouse_left*2+'px';
+        }
+        left.onmouseout=function(){
+            right.style.display='none';
+            left_box.style.display='none';
+        }
+
+    }
+</script>
+<body>
+<div id="left">
+    <div id="left_box"></div>
+    <div id="left_master"></div>
+</div>
+
+<div id="right">
+    <img src="800.jpg" id="right_pic" >
+</div>
+</body>
+</html>
